@@ -47,7 +47,7 @@ class SDKInfo(models.Model):
 
 class AppConfig(models.Model):
     pkg_id = models.UUIDField(unique=True, default=uuid.uuid4)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, blank=True)
     game = models.ForeignKey(GameInfo, on_delete=models.CASCADE, related_name='configs')
     channel = models.ForeignKey(ChannelInfo, on_delete=models.CASCADE, related_name='configs')
     sdk = models.ForeignKey(SDKInfo, on_delete=models.CASCADE, related_name='configs')
