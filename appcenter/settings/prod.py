@@ -2,6 +2,10 @@ from base import *
 
 DEBUG = False
 
+INSTALLED_APPS += [
+    'gunicorn',
+]
+
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
