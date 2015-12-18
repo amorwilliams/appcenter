@@ -108,3 +108,5 @@ crashlytics-build.properties
 
 _venv
 db.sqlite3
+/static
+nohup.out
