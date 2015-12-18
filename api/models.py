@@ -5,10 +5,10 @@ import uuid
 from django.db import models
 
 SERVER_STATUS = (
-    ('N', 'Normal'),
-    ('B', 'Busy'),
-    ('F', 'Full'),
-    ('S', 'Stop'),
+    (1, 'Normal'),
+    (2, 'Busy'),
+    (3, 'Full'),
+    (0, 'Stop'),
 )
 
 class GameInfo(models.Model):
@@ -23,7 +23,9 @@ class ServerInfo(models.Model):
     name = models.CharField(max_length=50, blank=False)
     ip = models.GenericIPAddressField()
     port = models.IntegerField()
-    status = models.CharField(max_length=1, choices=SERVER_STATUS, default='N')
+    status = models.IntegerField(choices=SERVER_STATUS, default=0)
+    index = models.IntegerField(default=1)
+    timeout = models.FloatField(default=10)
     new = models.BooleanField(default=True)
     game_id = models.ForeignKey(GameInfo, on_delete=models.CASCADE, related_name='servers')
 

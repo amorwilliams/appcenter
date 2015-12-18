@@ -6,13 +6,13 @@ from api.models import *
 class ServerInfoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ServerInfo
-        fields = ('name', 'ip', 'port', 'status', 'new', 'game_id')
+        fields = ('name', 'ip', 'port', 'status', 'index', 'timeout', 'new', 'game_id')
 
 
 class ServerInfoFullSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ServerInfo
-        fields = ('name', 'ip', 'port', 'status', 'new')
+        fields = ('name', 'ip', 'port', 'status', 'index', 'timeout', 'new')
 
 
 class GameInfoSerializer(serializers.HyperlinkedModelSerializer):
