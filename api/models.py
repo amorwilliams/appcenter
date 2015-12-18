@@ -25,7 +25,7 @@ class ServerInfo(models.Model):
     port = models.IntegerField()
     status = models.IntegerField(choices=SERVER_STATUS, default=0)
     index = models.IntegerField(default=1)
-    timeout = models.FloatField(default=10)
+    timeout = models.IntegerField(default=10)
     new = models.BooleanField(default=True)
     game_id = models.ForeignKey(GameInfo, on_delete=models.CASCADE, related_name='servers')
 
