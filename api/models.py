@@ -15,6 +15,7 @@ class GameInfo(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=50, blank=False, unique=True)
     version = models.CharField(max_length=50, blank=True, default='1.0.0')
+    announcement = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.name
