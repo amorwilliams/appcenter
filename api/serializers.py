@@ -28,7 +28,7 @@ class GameInfoFullSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = GameInfo
-        fields = ('name', 'version', 'servers')
+        fields = ('name', 'version', 'announcement', 'servers')
 
 
 class ChannelInfoSerializer(serializers.HyperlinkedModelSerializer):
