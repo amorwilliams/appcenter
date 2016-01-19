@@ -9,6 +9,7 @@ SERVER_STATUS = (
     (2, 'Busy'),
     (3, 'Full'),
     (0, 'Stop'),
+    (-1, 'Hide'),
 )
 
 class GameInfo(models.Model):
@@ -16,6 +17,9 @@ class GameInfo(models.Model):
     name = models.CharField(max_length=50, blank=False, unique=True)
     version = models.CharField(max_length=50, blank=True, default='1.0.0')
     announcement = models.TextField(blank=True)
+    activity_pic1 = models.ImageField(upload_to='img/')
+    activity_pic2 = models.ImageField(upload_to='img/')
+    activity_pic3 = models.ImageField(upload_to='img/')
 
     def __unicode__(self):
         return self.name

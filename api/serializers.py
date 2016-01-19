@@ -20,7 +20,7 @@ class GameInfoSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = GameInfo
-        fields = ('name', 'version', 'announcement', 'servers')
+        fields = ('name', 'version', 'announcement', 'activity_pic1', 'activity_pic2', 'activity_pic3','servers')
 
 
 class GameInfoFullSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,7 +28,7 @@ class GameInfoFullSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = GameInfo
-        fields = ('name', 'version', 'announcement', 'servers')
+        fields = ('name', 'version', 'announcement', 'activity_pic1', 'activity_pic2', 'activity_pic3', 'servers')
 
 
 class ChannelInfoSerializer(serializers.HyperlinkedModelSerializer):

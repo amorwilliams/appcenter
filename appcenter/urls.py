@@ -14,11 +14,18 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+from appcenter.settings.base import MEDIA_URL, MEDIA_ROOT
+from django.core.urlresolvers import reverse_lazy
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic.base import RedirectView
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include('api.urls')),
-]
+
+    url(r'^$', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False))
+
+] + static(MEDIA_URL, document_root=MEDIA_ROOT)
