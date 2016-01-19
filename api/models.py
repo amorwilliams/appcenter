@@ -17,9 +17,9 @@ class GameInfo(models.Model):
     name = models.CharField(max_length=50, blank=False, unique=True)
     version = models.CharField(max_length=50, blank=True, default='1.0.0')
     announcement = models.TextField(blank=True)
-    activity_pic1 = models.ImageField(upload_to='img/')
-    activity_pic2 = models.ImageField(upload_to='img/')
-    activity_pic3 = models.ImageField(upload_to='img/')
+    activity_pic1 = models.ImageField(upload_to='img/', blank=True)
+    activity_pic2 = models.ImageField(upload_to='img/', blank=True)
+    activity_pic3 = models.ImageField(upload_to='img/', blank=True)
 
     def __unicode__(self):
         return self.name
