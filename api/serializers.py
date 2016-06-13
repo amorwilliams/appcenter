@@ -9,11 +9,15 @@ class ServerInfoSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('name', 'ip', 'port', 'status', 'index', 'timeout', 'isnew', 'game_id')
 
 
-class ServerInfoFullSerializer(serializers.HyperlinkedModelSerializer):
+class ServerInfoFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServerInfo
-        fields = ('name', 'ip', 'port', 'status', 'index', 'timeout', 'isnew')
+        fields = ('name', 'ip', 'port', 'status', 'index', 'timeout', 'isnew', 'group_id')
 
+class GroupInfoFullSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupInfo
+        fields = ('id', 'name', 'index', 'status', 'isnew')
 
 class GameInfoSerializer(serializers.HyperlinkedModelSerializer):
     # servers = ServerInfoSerializer(many=True)
@@ -23,12 +27,13 @@ class GameInfoSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('name', 'version', 'announcement', 'activity_pic1', 'activity_pic2', 'activity_pic3','servers')
 
 
-class GameInfoFullSerializer(serializers.HyperlinkedModelSerializer):
+class GameInfoFullSerializer(serializers.ModelSerializer):
     servers = ServerInfoFullSerializer(many=True)
+    groups = GroupInfoFullSerializer(many=True)
 
     class Meta:
         model = GameInfo
-        fields = ('name', 'version', 'announcement', 'activity_pic1', 'activity_pic2', 'activity_pic3', 'servers')
+        fields = ('name', 'version', 'announcement', 'activity_pic1', 'activity_pic2', 'activity_pic3', 'servers', 'groups')
 
 
 class ChannelInfoSerializer(serializers.HyperlinkedModelSerializer):

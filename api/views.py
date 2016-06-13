@@ -14,6 +14,10 @@ class GameInfoViewSet(viewsets.ModelViewSet):
     queryset = GameInfo.objects.all()
     serializer_class = GameInfoSerializer
 
+class GroupInfoViewSet(viewsets.ModelViewSet):
+    queryset = GroupInfo.objects.all()
+    serializer_class = GroupInfoFullSerializer
+
 class ServerInfoViewSet(viewsets.ModelViewSet):
     queryset = ServerInfo.objects.all()
     serializer_class = ServerInfoSerializer

@@ -24,6 +24,17 @@ class GameInfo(models.Model):
     def __unicode__(self):
         return self.name
 
+class GroupInfo(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+    game_id = models.ForeignKey(GameInfo, on_delete=models.CASCADE, related_name='groups')
+    status = models.IntegerField(choices=SERVER_STATUS, default=0)
+    index = models.IntegerField(default=1)
+    isnew = models.BooleanField(default=True)
+    
+    def __unicode__(self):
+        return self.name
+
+
 class ServerInfo(models.Model):
     name = models.CharField(max_length=50, blank=False)
     ip = models.GenericIPAddressField()
@@ -33,6 +44,7 @@ class ServerInfo(models.Model):
     timeout = models.IntegerField(default=10)
     isnew = models.BooleanField(default=True)
     game_id = models.ForeignKey(GameInfo, on_delete=models.CASCADE, related_name='servers')
+    group_id = models.ForeignKey(GroupInfo, blank=True, related_name='servers')
 
     def __unicode__(self):
         return self.name
