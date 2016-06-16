@@ -1,9 +1,10 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.renderers import JSONRenderer
 from rest_framework import viewsets, generics, views, mixins
+from rest_framework.response import Response
 from rest_framework.decorators import detail_route
 
 from api.models import *
@@ -31,16 +32,36 @@ class SDKInfoViewSet(viewsets.ModelViewSet):
     serializer_class = SDKInfoSerializer
 
 
-class AppConfigDetailViewSet(mixins.RetrieveModelMixin,
-                             mixins.UpdateModelMixin,
-                             mixins.DestroyModelMixin,
-                             viewsets.GenericViewSet):
-    queryset = AppConfig.objects.all()
-    serializer_class = AppConfigSerializer
-    lookup_field = 'pkg_id'
+class AppConfigViewSet(viewsets.ViewSet):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
-class AppConfigListViewSet(mixins.ListModelMixin,
-                           mixins.CreateModelMixin,
-                           viewsets.GenericViewSet):
-    queryset = AppConfig.objects.all()
-    serializer_class = AppConfigCreateSerializer
+    def list(self, request):
+        queryset = AppConfig.objects.all()
+        serializer = AppConfigSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = AppConfig.objects.all()
+        config = get_object_or_404(queryset, pkg_id=pk)
+
+        serializer = AppConfigSerializer(config)
+        print type(serializer.data['game']['servers'])
+
+        remote_ip = self.getIPFromDJangoRequest(request)
+        print remote_ip
+
+        white_ip = Whitelist.objects.get(ip=remote_ip)
+        if white_ip.status == 2:
+            serializer.data['game']['servers'] = []
+        elif white_ip.status == 1:
+            for server in serializer.data['game']['servers']:
+                if server['status'] < 1:
+                    server['status'] = 1
+
+        return Response(serializer.data)
+
+    def getIPFromDJangoRequest(self, request):
+        if 'HTTP_X_FORWARDED_FOR' in request.META:
+            return request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            return request.META['REMOTE_ADDR']

@@ -12,6 +12,12 @@ SERVER_STATUS = (
     (-1, 'Hide'),
 )
 
+WHITE_LIST = (
+    (0, 'Clear'),
+    (1, 'White'),
+    (2, 'Black'),
+)
+
 class GameInfo(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=50, blank=False, unique=True)
@@ -30,7 +36,7 @@ class GroupInfo(models.Model):
     status = models.IntegerField(choices=SERVER_STATUS, default=0)
     index = models.IntegerField(default=1)
     isnew = models.BooleanField(default=True)
-    
+
     def __unicode__(self):
         return self.name
 
@@ -73,3 +79,11 @@ class AppConfig(models.Model):
 
     def __unicode__(self):
         return self.pkg_id
+
+
+class Whitelist(models.Model):
+    ip = models.GenericIPAddressField(db_index=True, unique=True)
+    status = models.IntegerField(choices=WHITE_LIST, default=0)
+
+    def __unicode__(self):
+        return "[{ip}]-[{status}]".format(ip=self.ip, status=WHITE_LIST[self.status][1])
